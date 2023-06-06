@@ -22,3 +22,29 @@ jobs:
           args: deploy --prod  # Netlify에 배포하는 명령어를 입력합니다.
       - name: 추출된 URL 표시
         run: echo "URL: ${{ steps.NETLIFY_DEPLOY.outputs.deploy-url }}"
+name: Deploy to Netlify
+
+on:
+  push:
+    branches:
+      - main  # 배포하고자 하는 브랜치 이름을 지정합니다.
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 코드
+        uses: actions/checkout@v2
+
+      - name: Netlify 배포
+        uses: netlify/actions/cli@master
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}  # Netlify 인증 토큰을 설정합니다.
+          NETLIFY_SITE_ID: "848d8aba-cb39-4d15-bba6-8ac428bd6f21"   # Netlify 사이트 ID를 설정합니다.
+        with:
+          args: deploy --prod  # Netlify에 배포하는 명령어를 입력합니다.
+
+      - name: 추출된 URL 표시
+        run: |
+          echo "URL: ${{ steps.deploy.outputs.url }}"
