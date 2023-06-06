@@ -1,2 +1,0 @@
-- name: Deploy to Netlfiy
-  uses: danakim/gh-action-deploy-netlify@v1
